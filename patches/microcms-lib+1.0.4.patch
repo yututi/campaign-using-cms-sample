@@ -1,0 +1,25 @@
+diff --git a/node_modules/microcms-lib/dist/index.js b/node_modules/microcms-lib/dist/index.js
+index 3907175..f197c8d 100644
+--- a/node_modules/microcms-lib/dist/index.js
++++ b/node_modules/microcms-lib/dist/index.js
+@@ -60,18 +60,19 @@ class MicroCMS {
+      * @memberof MicroCMS
+      */
+     async get(endpoint, id, options = {}) {
++        console.log({id})
+         const { globalKey } = options, o = __rest(options, ["globalKey"]);
+         const queryString = options && convertQuery(o);
+         const { apiKey, apiGlobalKey } = this.options;
+         if (!apiKey)
+             return null;
+-        return (0, isomorphic_fetch_1.default)(`${this.serviceUrl}${endpoint}${id}${queryString}`, {
++        return (0, isomorphic_fetch_1.default)(`${this.serviceUrl}${endpoint}/${id}${queryString}`, {
+             headers: globalKey && apiGlobalKey
+                 ? { 'X-MICROCMS-API-KEY': apiKey, 'X-GLOBAL-DRAFT-KEY': apiGlobalKey }
+                 : { 'X-MICROCMS-API-KEY': apiKey },
+         })
+             .then(async (res) => (res.status === 200 ? res.json() : null))
+             .catch(() => null);
+     }
+     /**
+      * Acquiring multiple contents
