@@ -9,6 +9,7 @@
 - .env.sampleを.envにリネームし、サービスIDとAPI Keyを設定
 - 適当なコンテンツを作成
 - `npm run dev`
+    - devだとSSRになるのでISRの挙動を確認したい場合は`npm run build`してから`npm run start`
 
 ## TODO
 
