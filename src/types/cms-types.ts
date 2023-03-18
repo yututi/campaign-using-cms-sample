@@ -74,6 +74,10 @@ interface campaign_productListPickup {
 interface campaign_text {
   fieldId: 'text'
   /**
+   * タイトル
+   */
+  title?: string
+  /**
    * テキスト
    */
   text?: string
