@@ -6,7 +6,7 @@
     - API名は任意
     - エンドポイントはcampaign
     - リスト形式
-    - APIスキーマの定義でこのプロジェクトにある`schema/api-*.json`ファイルをインポート
+    - APIスキーマの定義でこのプロジェクトにある`schema/api-campaign-*.json`ファイルをインポート
 - API設定 > 画面プレビューで遷移先URLに以下を設定
     ```
     http://localhost:3000/api/preview?campaignId={CONTENT_ID}&draftKey={DRAFT_KEY}

@@ -93,7 +93,7 @@ const TOC = ({campaign}: CampaignProps) => {
             if (field.fieldId === "productListPickup") return field.heading;
             if (field.fieldId === "text") return field.title;
         })()
-        if (title) return null;
+        if (!title) return null;
         const key = `${field.fieldId}_${index}`
         return (
         <li key={key}>
