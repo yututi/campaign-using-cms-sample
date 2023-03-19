@@ -4,6 +4,7 @@ import { GetStaticProps } from 'next'
 import cms, { getCampaignList } from '@/libs/microcms'
 import { CampaignList } from './api/campaigns'
 import Link from 'next/link'
+import { useState } from 'react'
 
 type Props = {
   campaigns: CampaignList
@@ -20,19 +21,38 @@ export default function Home({campaigns}: Props) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className={styles.main}>
-        {campaigns.contents.map(campaign => (
-          <CampaignLink key={campaign.id} {...campaign}/>
-        ))}
+        <ul>
+          {campaigns.contents.map(campaign => (
+            <CampaignLink key={campaign.id} {...campaign}/>
+          ))}
+        </ul>
+        <details>
+          <summary>revalidateについて</summary>
+          コンテンツの更新があったていでサーバ側のキャッシュを削除し、次にページを表示する際に最新のコンテンツで静的ファイルを生成し直します。<br/>
+          本来はCMS側からwebhookなどで呼び出されるものですが、ローカルではやりようがないのでボタンでreavalidateするようにしています。<br/>
+          <code>npm run dev</code>では動作しない(SSRになるので毎回最新コンテンツを取得する)ので、<code>npm run build & npm run start</code>で確認できます。
+        </details>
       </main>
     </>
   )
 }
 
 const CampaignLink = ({id, title}: {id:string, title:string}) => {
+
+  const [revalidated, setRevalidate] = useState(false)
+
+  const onClick = async () => {
+    await fetch(`/api/revalidate?${new URLSearchParams({
+      campaignId: id
+    })}`)
+    setRevalidate(true)
+  }
+
   return (
-    <div>
+    <li>
       <Link href={`/campaigns/${id}`}>{title}</Link>
-    </div>
+      <button onClick={onClick} disabled={revalidated}>Revalidate{revalidated && "d"}</button>
+    </li>
   )
 }
 
